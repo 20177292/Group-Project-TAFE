@@ -5,24 +5,13 @@ os.chdir(r"C:\Users\20113516\OneDrive - TAFE\week8\week8 python\weather(2)")
 
 def mean(in_series):
     return(sum(in_series) / len(in_series))
-print(mean([1.0, 2.0, 3.0, 4.0]))      # should print 2.5
-
-
-
-#return(sum(in_series) / len(in_series))
 
 def variance(in_series):
-    # Pseudo-Code
-    # get mean value
-    # mean - associated data point
-    # square the value
-    # divide sum buy (n-1) where n is data points
     meanValue = mean(in_series)
     squaredValues = []
     for dataPoint in in_series:
         squaredValues.append((dataPoint - meanValue) ** 2)
     return sum(squaredValues) / len(in_series) - 1
-    pass
 
 def standard_deviation(in_series):
     pass
