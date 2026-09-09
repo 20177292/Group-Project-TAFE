@@ -1,4 +1,3 @@
-
 series_titles = ["Maximum temperature (Degree C)", "Minimum temperature (Degree C)", "Rainfall amount (millimetres)"]
 
 def mean(in_series):
@@ -43,11 +42,41 @@ def get_user_choice(options):
     choice = int(choice) - 1
     return options[choice]
 
+calc_functions = {
+    "Mean": mean,
+    "Variance": variance,
+    "Standard deviation": standard_deviation,
+    "Range": range_calculation,
+}
+
+def get_date_range():
+    print("Enter a date range (press Enter to skip either):")
+    min_date = input("Start date (YYYY-MM-DD): ").strip() or None
+    max_date = input("End date (YYYY-MM-DD): ").strip() or None
+    return min_date, max_date
+
 def menu(data_table):
-    print("Select a data series:")
-    choice = get_user_choice(series_titles)
-    series = data_table[choice]
-    print(f"Mean: {mean(data_table[choice])}")
+    while True:
+        print("\nSelect a data series (or type 'exit' to quit):")
+        series_choice = get_user_choice(series_titles)
+        if series_choice is None:
+            break
+
+        min_date, max_date = get_date_range()
+        series = filter_series(
+            data_table["Date"],
+            data_table[series_choice],
+            max_date=max_date,
+            min_date=min_date,
+        )
+
+        print("\nSelect a calculation:")
+        calc_choice = get_user_choice(list(calc_functions.keys()))
+        if calc_choice is None:
+            break
+
+        result = calc_functions[calc_choice](series)
+        print(f"\n{calc_choice} of {series_choice}: {result}")
 
 if __name__ == "__main__":
     data = read_csv('weather.csv')
