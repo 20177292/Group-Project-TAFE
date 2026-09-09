@@ -1,7 +1,7 @@
 
 series_titles = ["Maximum temperature (Degree C)", "Minimum temperature (Degree C)", "Rainfall amount (millimetres)"]
 
-def medianInxed(in_series):
+def medianIndex(in_series):
     if len(in_series) % 2 == 1:
         return(len(in_series) / 2 - 0.5)
     else:
