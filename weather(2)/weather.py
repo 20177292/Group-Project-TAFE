@@ -1,6 +1,13 @@
 
 series_titles = ["Maximum temperature (Degree C)", "Minimum temperature (Degree C)", "Rainfall amount (millimetres)"]
 
+def medianInxed(in_series):
+    if len(in_series) % 2 == 1:
+        return(len(in_series) / 2 - 0.5)
+    else:
+        return([len(in_series) / 2, len(in_series) / 2 - 1])
+
+
 def mean(in_series):
     return(sum(in_series) / len(in_series))
 
@@ -18,6 +25,9 @@ def range_calculation(in_series):
     sortedList = in_series.sorted()
     return (sortedList[-1] - sortedList[0])
 
+def iqr_calculation(in_series):
+    sortedListed = in_series.sorted()
+    quarter1 = sortedList
 
 def filter_series(year_series, month_series, day_series, data_series, max_date=None, min_date=None):
     pass
@@ -45,6 +55,7 @@ def get_user_choice(options):
 
 def menu(data_table):
     print("Select a data series:")
+
     choice = get_user_choice(series_titles)
     series = data_table[choice]
     print(f"Mean: {mean(data_table[choice])}")
