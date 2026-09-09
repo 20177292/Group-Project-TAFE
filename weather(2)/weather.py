@@ -3,6 +3,7 @@ series_titles = [
     "Minimum temperature (Degree C)",
     "Rainfall amount (millimetres)",
     "Temperature range (Degree C)",
+    "Temperature Range"
 ]
 
 def medianIndex(in_series):
