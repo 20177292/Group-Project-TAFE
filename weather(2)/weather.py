@@ -12,7 +12,7 @@ def variance(in_series):
     return sum(squaredValues) / len(in_series) - 1
 
 def standard_deviation(in_series):
-    pass
+    return variance(in_series) ** 0.5
 
 def range_calculation(in_series):
     sortedList = in_series.sorted()
