@@ -14,6 +14,11 @@ def variance(in_series):
 def standard_deviation(in_series):
     pass
 
+def range_calculation(in_series):
+    sortedList = in_series.sorted()
+    return (sortedList[-1] - sortedList[0])
+
+
 def filter_series(year_series, month_series, day_series, data_series, max_date=None, min_date=None):
     pass
 
