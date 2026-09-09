@@ -1,7 +1,5 @@
 
 series_titles = ["Maximum temperature (Degree C)", "Minimum temperature (Degree C)", "Rainfall amount (millimetres)"]
-import os
-os.chdir(r"C:\Users\20113516\OneDrive - TAFE\week8\week8 python\weather(2)")
 
 def mean(in_series):
     return(sum(in_series) / len(in_series))
