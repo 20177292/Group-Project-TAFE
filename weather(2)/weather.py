@@ -5,6 +5,16 @@ def mean(in_series):
     pass
 
 def variance(in_series):
+    # Pseudo-Code
+    # get mean value
+    # mean - associated data point
+    # square the value
+    # divide sum buy (n-1) where n is data points
+    meanValue = mean(in_series)
+    squaredValues = []
+    for dataPoint in in_series:
+        squaredValues.append((dataPoint - meanValue) ** 2)
+    return sum(squaredValues) / len(in_series) - 1
     pass
 
 def standard_deviation(in_series):
