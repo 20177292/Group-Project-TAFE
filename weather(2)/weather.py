@@ -1,4 +1,9 @@
-series_titles = ["Maximum temperature (Degree C)", "Minimum temperature (Degree C)", "Rainfall amount (millimetres)"]
+series_titles = [
+    "Maximum temperature (Degree C)",
+    "Minimum temperature (Degree C)",
+    "Rainfall amount (millimetres)",
+    "Temperature range (Degree C)",
+]
 
 def medianIndex(in_series):
     if len(in_series) % 2 == 1:
@@ -69,6 +74,18 @@ def read_csv(file, default_value=None):
             data_table[headers[i]] = [default_value if (len(line[i]) == 0) else float(line[i]) for line in lines[1:]]
     return data_table
 
+def add_temperature_range(data_table):
+    max_series = data_table["Maximum temperature (Degree C)"]
+    min_series = data_table["Minimum temperature (Degree C)"]
+    temp_range = []
+    for max_val, min_val in zip(max_series, min_series):
+        if max_val is None or min_val is None:
+            temp_range.append(None)
+        else:
+            temp_range.append(max_val - min_val)
+    data_table["Temperature range (Degree C)"] = temp_range
+    return data_table
+
 def get_user_choice(options):
     for i, option in enumerate(options):
         print(f"{i+1}. {option}")
@@ -129,4 +146,5 @@ calc_functions = {
 
 if __name__ == "__main__":
     data = read_csv('weather.csv')
+    data = add_temperature_range(data)
     menu(data)
