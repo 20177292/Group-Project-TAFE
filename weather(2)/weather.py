@@ -18,16 +18,29 @@ def range_calculation(in_series):
     return (sortedList[-1] - sortedList[0])
 
 
-def filter_series(year_series, month_series, day_series, data_series, max_date=None, min_date=None):
-    pass
+def filter_series(date_series, data_series, max_date=None, min_date=None):
+    # temporary stub matching the menu's call signature — replace with
+    # the real implementation once #9 is merged
+    result = []
+    for date, value in zip(date_series, data_series):
+        if min_date and date < min_date:
+            continue
+        if max_date and date > max_date:
+            continue
+        result.append(value)
+    return result
 
-def read_csv(file,default_value=None):
+def read_csv(file, default_value=None):
     data_table = {}
     with open(file) as f:
         lines = f.readlines()
     lines = [line.strip().split(',') for line in lines]
-    for i in range(len(lines[0])):
-        data_table[lines[0][i]] = [default_value if (len(line[i]) == 0) else float(line[i]) for line in lines[1:]]
+    headers = lines[0]
+    for i in range(len(headers)):
+        if headers[i] == "Date":
+            data_table[headers[i]] = [line[i] for line in lines[1:]]
+        else:
+            data_table[headers[i]] = [default_value if (len(line[i]) == 0) else float(line[i]) for line in lines[1:]]
     return data_table
 
 def get_user_choice(options):
@@ -50,7 +63,7 @@ calc_functions = {
 }
 
 def get_date_range():
-    print("Enter a date range (press Enter to skip either):")
+    print("Enter a date range in YYYY-MM-DD format (press Enter to skip either):")
     min_date = input("Start date (YYYY-MM-DD): ").strip() or None
     max_date = input("End date (YYYY-MM-DD): ").strip() or None
     return min_date, max_date
@@ -74,6 +87,7 @@ def menu(data_table):
         calc_choice = get_user_choice(list(calc_functions.keys()))
         if calc_choice is None:
             break
+        
 
         result = calc_functions[calc_choice](series)
         print(f"\n{calc_choice} of {series_choice}: {result}")
