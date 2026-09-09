@@ -3,9 +3,9 @@ series_titles = ["Maximum temperature (Degree C)", "Minimum temperature (Degree 
 
 def medianIndex(in_series):
     if len(in_series) % 2 == 1:
-        return([len(in_series) / 2 - 0.5])
+        return([int(len(in_series) / 2 - 0.5)])
     else:
-        return([len(in_series) / 2, len(in_series) / 2 - 1])
+        return([int(len(in_series) / 2), int(len(in_series) / 2 - 1)])
 
 
 def mean(in_series):
@@ -22,26 +22,27 @@ def standard_deviation(in_series):
     return variance(in_series) ** 0.5
 
 def range_calculation(in_series):
-    sortedList = in_series.sorted()
+    sortedList = sorted(in_series)
     return (sortedList[-1] - sortedList[0])
 
 def iqr_calculation(in_series):
     q1 = []
     q3 = []
-    sortedList = in_series.sorted()
-    firstHalf = sortedList[0:medianIndex(sortedList)[0]+1]
-    secondHalf = sortedList[medianIndex(sortedList)[-1]:]
-    q1indecies = medianIndex[firstHalf]
+    sortedList = sorted(in_series)
+    print(sortedList)
+    firstHalf = sortedList[0:(int(medianIndex(sortedList)[0])+1)]
+    secondHalf = sortedList[int(medianIndex(sortedList)[-1]):]
+    q1indecies = medianIndex(firstHalf)
     for value in q1indecies:
         q1.append(firstHalf[value])
     q1 = sum(q1) / len(q1)
 
-    q3indecies = medianIndex[secondHalf]
+    q3indecies = medianIndex(secondHalf)
     for value in q3indecies:
         q3.append(secondHalf[value])
     q3 = sum(q3) / len(q3)
 
-    return(q1, q3)
+    return(q3 - q1)
     
 
 def filter_series(year_series, month_series, day_series, data_series, max_date=None, min_date=None):
@@ -75,6 +76,6 @@ def menu(data_table):
     series = data_table[choice]
     print(f"Mean: {mean(data_table[choice])}")
 
-if __name__ == "__main__":
-    data = read_csv('weather.csv')
-    menu(data)
+#if __name__ == "__main__":
+#    data = read_csv('weather.csv')
+#    menu(data)
