@@ -1,5 +1,12 @@
 series_titles = ["Maximum temperature (Degree C)", "Minimum temperature (Degree C)", "Rainfall amount (millimetres)"]
 
+def medianIndex(in_series):
+    if len(in_series) % 2 == 1:
+        return([int(len(in_series) / 2 - 0.5)])
+    else:
+        return([int(len(in_series) / 2), int(len(in_series) / 2 - 1)])
+
+
 def mean(in_series):
     return(sum(in_series) / len(in_series))
 
@@ -14,9 +21,28 @@ def standard_deviation(in_series):
     return variance(in_series) ** 0.5
 
 def range_calculation(in_series):
-    sortedList = in_series.sorted()
+    sortedList = sorted(in_series)
     return (sortedList[-1] - sortedList[0])
 
+def iqr_calculation(in_series):
+    q1 = []
+    q3 = []
+    sortedList = sorted(in_series)
+    print(sortedList)
+    firstHalf = sortedList[0:(int(medianIndex(sortedList)[0])+1)]
+    secondHalf = sortedList[int(medianIndex(sortedList)[-1]):]
+    q1indecies = medianIndex(firstHalf)
+    for value in q1indecies:
+        q1.append(firstHalf[value])
+    q1 = sum(q1) / len(q1)
+
+    q3indecies = medianIndex(secondHalf)
+    for value in q3indecies:
+        q3.append(secondHalf[value])
+    q3 = sum(q3) / len(q3)
+
+    return(q3 - q1)
+    
 
 def filter_series(date_series, data_series, max_date=None, min_date=None):
     # temporary stub matching the menu's call signature — replace with
@@ -55,12 +81,7 @@ def get_user_choice(options):
     choice = int(choice) - 1
     return options[choice]
 
-calc_functions = {
-    "Mean": mean,
-    "Variance": variance,
-    "Standard deviation": standard_deviation,
-    "Range": range_calculation,
-}
+
 
 def get_date_range():
     print("Enter a date range in YYYY-MM-DD format (press Enter to skip either):")
@@ -69,6 +90,7 @@ def get_date_range():
     return min_date, max_date
 
 def menu(data_table):
+
     while True:
         print("\nSelect a data series (or type 'exit' to quit):")
         series_choice = get_user_choice(series_titles)
@@ -91,6 +113,14 @@ def menu(data_table):
 
         result = calc_functions[calc_choice](series)
         print(f"\n{calc_choice} of {series_choice}: {result}")
+
+calc_functions = {
+    "Mean": mean,
+    "Variance": variance,
+    "Standard deviation": standard_deviation,
+    "Range": range_calculation,
+    "IQR" : iqr_calculation
+}
 
 if __name__ == "__main__":
     data = read_csv('weather.csv')
