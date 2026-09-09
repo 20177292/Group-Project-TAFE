@@ -3,7 +3,7 @@ series_titles = ["Maximum temperature (Degree C)", "Minimum temperature (Degree 
 
 def medianIndex(in_series):
     if len(in_series) % 2 == 1:
-        return(len(in_series) / 2 - 0.5)
+        return([len(in_series) / 2 - 0.5])
     else:
         return([len(in_series) / 2, len(in_series) / 2 - 1])
 
@@ -26,8 +26,23 @@ def range_calculation(in_series):
     return (sortedList[-1] - sortedList[0])
 
 def iqr_calculation(in_series):
-    sortedListed = in_series.sorted()
-    quarter1 = sortedList
+    q1 = []
+    q3 = []
+    sortedList = in_series.sorted()
+    firstHalf = sortedList[0:medianIndex(sortedList)[0]+1]
+    secondHalf = sortedList[medianIndex(sortedList)[-1]:]
+    q1indecies = medianIndex[firstHalf]
+    for value in q1indecies:
+        q1.append(firstHalf[value])
+    q1 = sum(q1) / len(q1)
+
+    q3indecies = medianIndex[secondHalf]
+    for value in q3indecies:
+        q3.append(secondHalf[value])
+    q3 = sum(q3) / len(q3)
+
+    return(q1, q3)
+    
 
 def filter_series(year_series, month_series, day_series, data_series, max_date=None, min_date=None):
     pass
