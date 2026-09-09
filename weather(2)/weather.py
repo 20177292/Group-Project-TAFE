@@ -104,6 +104,11 @@ def menu(data_table):
             max_date=max_date,
             min_date=min_date,
         )
+        series = [v for v in series if v is not None]
+
+        if not series:
+            print("\nNo data found for that date range (or all values were missing). Try again.")
+            continue
 
         print("\nSelect a calculation:")
         calc_choice = get_user_choice(list(calc_functions.keys()))
